@@ -17,5 +17,7 @@
 #define ECHAP 27
 
 int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES]);
+int verif_adjacent(int x1, int y1, int x2, int y2);
+void permutation(char tab[NBLIGNES][NBCOLONNES], int x1, int y1, int x2, int y2);
 
 #endif // MANIPULATION_H_INCLUDED
