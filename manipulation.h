@@ -1,0 +1,21 @@
+#ifndef MANIPULATION_H_INCLUDED
+#define MANIPULATION_H_INCLUDED
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <conio.h>
+
+#define NBLIGNES 25
+#define NBCOLONNES 45
+
+//code fleches
+#define HAUT    75
+#define BAS     77
+#define GAUCHE  72
+#define DROITE  80
+#define ESPACE 32
+#define ECHAP 27
+
+int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES]);
+
+#endif // MANIPULATION_H_INCLUDED

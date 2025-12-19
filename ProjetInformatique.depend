@@ -1,7 +1,21 @@
 # depslib dependency file v1.0
-1766154365 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\main.c
+1766155934 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
+	"manipulation.h"
+	"affichage.h"
+
+1766155985 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\affichage.h
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+
+1766156024 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.h
+	<stdlib.h>
+	<stdio.h>
 	<conio.h>
+
+1766155647 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\affichage.c
+	"affichage.h"
 
