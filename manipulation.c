@@ -16,7 +16,7 @@ void supprimer_type(char tab[NBLIGNES][NBCOLONNES], char type)
 int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur)
 {
     int i, j, k;
-
+    int nb_sup = 0;
 
     for(i = 0; i < NBLIGNES; i++)
     {
@@ -30,7 +30,7 @@ int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur)
             for(k = 1; k < min_longueur; k++)
                 if(tab[i][j+k] == x) compteur++;
             if(compteur == min_longueur)
-            {
+            {   nb_sup ++;
                 if(min_longueur == 6) supprimer_type(tab, x);
                 else
                 {
@@ -55,6 +55,7 @@ int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur)
                 if(tab[i+k][j] == x) compteur++;
             if(compteur == min_longueur)
             {
+                nb_sup++;
                 if(min_longueur == 6) supprimer_type(tab, x);
                 else
                 {
@@ -64,16 +65,28 @@ int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur)
             }
         }
     }
-    return 0;
+    return nb_sup;
+}
+
+void traiter_combi(char plateau[NBLIGNES][NBCOLONNES])
+{
+    int combi;
+
+    do{
+        combi = verifier_plateau(plateau);
+        if(combi>0)
+        {
+            gravite(plateau);
+        }
+    }while(combi>0);
 }
 
 
-
-void verifier_plateau(char tab[NBLIGNES][NBCOLONNES])
-{
-    detecter_suite(tab, 6);  // suite de 6 → supprime tout le type
-
-    detecter_suite(tab, 5);  // suite de 4 → supprime seulement la suite
+int verifier_plateau(char tab[NBLIGNES][NBCOLONNES])
+{   int trouve = 0;
+    trouve +=detecter_suite(tab, 6);  // suite de 6 → supprime tout le type
+    trouve+=detecter_suite(tab, 5);  // suite de 4 → supprime seulement la suite
+    return trouve;
 }
 
 
@@ -136,8 +149,7 @@ int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES])
     while(1)
     {
         system("cls");
-        verifier_plateau(plateau);
-        gravite((plateau));
+
         affichage_plateau(plateau,x,y);
         printf(("\nposition %d %d"),x,y);
         printf(("\nchosen %d %d"), selected_x, selected_y);
@@ -168,8 +180,7 @@ int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES])
                 if(verif_adjacent(selected_x, selected_y, x, y))
                 {
                     permutation(plateau, selected_x, selected_y, x, y);
-                    verifier_plateau(plateau);
-                    gravite((plateau));
+                    traiter_combi(plateau);
 
                 }
                 selected = 0;
