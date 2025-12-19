@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <conio.h>
 
 #define NBLIGNES 25
 #define NBCOLONNES 45
@@ -15,7 +16,15 @@
 #define MAGENTA "\033[35m"
 #define CYAN    "\033[36m"
 #define BLANC   "\033[37m"
+#define BG_BLANC    "\033[47m"
 
+//code fleches
+#define HAUT    75
+#define BAS     77
+#define GAUCHE  72
+#define DROITE  80
+#define ESPACE 32
+#define ECHAP 27
 
 
 int combinaison_interdite(char tab[NBLIGNES][NBCOLONNES], int i, int j)
@@ -73,31 +82,74 @@ const char* couleur_item(char c)
 }
 
 
-void affichage_plateau(char tab[NBLIGNES][NBCOLONNES])
+void affichage_plateau(char tab[NBLIGNES][NBCOLONNES], int x, int y)
 {
 
 
     for(int i = 0; i< NBLIGNES; i++)
     {
-        printf("|");
         for(int j = 0; j<NBCOLONNES; j++)
         {
-            printf("%s%c%s", couleur_item(tab[i][j]), tab[i][j], RESET);
-            printf("|");
+            if(i == x && j == y)
+            {
+                printf(BG_BLANC"%s%c%s", couleur_item(tab[i][j]), tab[i][j], RESET);
+            }
+            else
+            {
+                printf("%s%c%s", couleur_item(tab[i][j]), tab[i][j], RESET);
+            }
         }
-        printf(("\n"));
-        for(int l = 0; l<NBCOLONNES*2; l++)
-        {
-            printf("_");
-        }
+
         printf("\n");
     }
 }
+
+int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES])
+{
+    int x = NBCOLONNES/2;
+    int y = NBLIGNES /2;
+    int touche;
+    int selected = 0;
+    int selected_x= 0, selected_y =0;
+
+    while(1)
+    {
+        system("cls");
+
+        affichage_plateau(plateau,x,y);
+        printf(("\nposition %d %d"),x,y);
+        printf(("\nchosen %d %d"), selected_x, selected_y);
+        touche = getch();
+        switch (touche)
+        {
+        case HAUT:
+            if (y > 0) y--;
+            break;
+        case BAS:
+            if (y < NBCOLONNES-1) y++;
+            break;
+        case GAUCHE:
+            if (x > 0) x--;
+            break;
+        case DROITE:
+            if (x < NBLIGNES-1) x++;
+            break;
+        case ESPACE:
+            selected = 1;
+            selected_x = x;
+            selected_y = y;
+            break;
+        case ECHAP:
+            return 0;
+        }
+    }
+}
+
 
 int main()
 {
     srand(time(NULL));
     char plateau[NBLIGNES][NBCOLONNES];
     initialisation_plateau(plateau);
-    affichage_plateau((plateau));
+    boucle_jeu(plateau);
 }
