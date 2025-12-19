@@ -225,7 +225,7 @@ int check_objectif(int niveau, int objectifs[5])
 }
 
 
-int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20])
+int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20], int nb_vies)
 {
     int x = NBCOLONNES/2;
     int y = NBLIGNES /2;
@@ -237,6 +237,8 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20])
     double temps_passe;
     int nb_coups= 0;
     int temps_max= 0;
+    int choix = 0;
+
     system("cls");
     initialisation_plateau(plateau,niveau);
 
@@ -259,19 +261,21 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20])
     }
 
     affichage_plateau(plateau,x,y);
-                switch(niveau)
-            {
-            case 1:
-                printf("\033[15;60HNiveau 1\033[16;60HF:%d/10 P:%d/10 O:%d/10 A:%d/10 C:%d/10", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
-                break;
-            case 2:
-                printf("\033[15;60HNiveau 2\033[16;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
-                break;
-            case 3:
-                printf("\033[15;60HNiveau 3\033[16;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
-                break;
-            }
-            printf("\033[20;60HCoups restants:%d",nb_coups);
+    printf("\033[14;60HJoueur: %s", pseudo);
+    printf("\033[15;60HVies restantes: %d",nb_vies);
+    switch(niveau)
+    {
+    case 1:
+        printf("\033[16;60HNiveau 1\033[17;60HF:%d/10 P:%d/10 O:%d/10 A:%d/10 C:%d/10", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+        break;
+    case 2:
+        printf("\033[16;60HNiveau 2\033[17;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+        break;
+    case 3:
+        printf("\033[16;60HNiveau 3\033[17;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+        break;
+    }
+    printf("\033[20;60HCoups restants:%2d",nb_coups);
     while(nb_coups>0 && temps_max-temps_passe >0 && check_objectif(niveau, objectifs) == 0)
     {
 
@@ -309,8 +313,8 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20])
                     {
                         if(permutation(plateau, selected_x, selected_y, x, y)== 1)
                         {
-                          traiter_combi(plateau,objectifs);
-                          nb_coups--;
+                            traiter_combi(plateau,objectifs);
+                            nb_coups--;
                         }
 
 
@@ -321,47 +325,143 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20])
                 }
                 break;
             case ECHAP:
-                return 0;
+
+                do
+                {
+                    system("cls");
+                    printf("Quitter\n");
+                    printf("1- Oui\n2- Non\n");
+                    scanf("%d", &choix);
+                    if(choix >2 || choix <1)
+                    {
+                        printf("Mauvaise saise\n");
+                        Sleep(1000);
+                        system("cls");
+                    }
+                }
+                while(choix>2 || choix <1);
+                if(choix == 1)
+                {   printf("Sauvegarde\n");
+                    ecrireSauvegarde(niveau, pseudo, nb_vies);
+                    return 0;
+                }
+                break;
             }
 
             affichage_plateau(plateau,x,y);
+
             printf(("\nposition %d %d"),x,y);
             switch(niveau)
             {
             case 1:
-                printf("\033[15;60HNiveau 1\033[16;60HF:%d/10 P:%d/10 O:%d/10 A:%d/10 C:%d/10", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+                printf("\033[16;60HNiveau 1\033[17;60HF:%d/10 P:%d/10 O:%d/10 A:%d/10 C:%d/10", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
                 break;
             case 2:
-                printf("\033[15;60HNiveau 2\033[16;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+                printf("\033[16;60HNiveau 2\033[17;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
                 break;
             case 3:
-                printf("\033[15;60HNiveau 3\033[16;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+                printf("\033[16;60HNiveau 3\033[17;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
                 break;
             }
-            printf("\033[20;60HCoups restants:%d",nb_coups);
+            printf("\033[14;60HJoueur: %s", pseudo);
+            printf("\033[15;60HVies restantes: %d",nb_vies);
+            printf("\033[20;60HCoups restants:%2d",nb_coups);
 
         }
         printf("\033[25;60HTemps restant:%.1f\n",temps_max-temps_passe);
     }
+    system("cls");
+    if(nb_vies>0)
+    {
+        if(nb_coups == 0|| temps_max- temps_passe <= 0)
+        {
+            do
+            {
+                printf("Voulez vous retentez votre chance ? Il vous reste %d vie(s)\n",nb_vies);
+                printf("1- Oui\n2- Non\n");
+                scanf("%d", &choix);
+                if(choix >2 || choix <1)
+                {
+                    printf("Mauvaise saise\n");
+                    Sleep(1000);
+                    system("cls");
+                }
+            }
+            while(choix>2 || choix <1);
+            if(choix == 1)
+            {
+                boucle_jeu(niveau,plateau,pseudo,nb_vies-1);
+            }
+            else
+            {
+                printf("Sauvegarde\n");
+                ecrireSauvegarde(niveau, pseudo, nb_vies);
+            }
+        }
 
-    if(check_objectif(niveau, objectifs) == 0)
-    {
-        system("cls");
-        printf("Vous avez perdu");
-    }
-    else if(check_objectif(niveau, objectifs) == 1)
-    {
-        boucle_jeu(2,plateau,pseudo);
-    }
-    else if(check_objectif(niveau, objectifs) == 2)
-    {
-        boucle_jeu(3,plateau,pseudo);
-    }
-    else if(check_objectif(niveau, objectifs) == 3)
-    {
-        printf("Bravo");
+        if(check_objectif(niveau, objectifs) == 1)
+        {
+            boucle_jeu(2,plateau,pseudo,nb_vies);
+        }
+        else if(check_objectif(niveau, objectifs) == 2)
+        {
+            boucle_jeu(3,plateau,pseudo,nb_vies);
+        }
+        else if(check_objectif(niveau, objectifs) == 3)
+        {
+            system("cls");
+            printf("Bravo vous avez reussi !");
+            Sleep(2000);
+        }
     }
     else
-        return 0;
+    {
+        system("cls");
+        printf("Partie terminee, vous avez perdu !\n");
+        Sleep(2000);
+    }
+
+
+    system("cls");
     return 1;
+}
+
+int chargerSauvegarde()
+{
+  FILE* fichier;
+  char plateau[NBLIGNES][NBCOLONNES];
+  int niveau;
+  char pseudo[20];
+  int nb_vies;
+
+  fichier = fopen("sauvegarde.txt","r");
+
+  if(fichier == NULL)
+  {
+      printf("Fichier introuvable\n");
+      return 1;
+  }
+  fscanf(fichier,"%d %s %d\n",&niveau, pseudo,&nb_vies);
+  fclose(fichier);
+
+  boucle_jeu(niveau,plateau,pseudo,nb_vies);
+  return 0;
+
+}
+
+int ecrireSauvegarde(int niveau, char pseudo[20], int nb_vies)
+{
+    FILE* fichier;
+
+    fichier = fopen("sauvegarde.txt","w");
+
+    if(fichier == NULL)
+    {
+        printf("Erreur d'ouverture fichier");
+        return 1;
+    }
+
+    fprintf(fichier, "%d %s %d\n", niveau, pseudo, nb_vies);
+    fclose(fichier);
+    return 0;
 }

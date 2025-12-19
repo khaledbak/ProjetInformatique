@@ -19,7 +19,7 @@
 #define ESPACE 32
 #define ECHAP 27
 
-int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20]);
+int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20], int nb_vies);
 int verif_adjacent(int x1, int y1, int x2, int y2);
 int permutation(char tab[NBLIGNES][NBCOLONNES], int x1, int y1, int x2, int y2);
 int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur, int objectifs[5]);
@@ -28,5 +28,7 @@ int verifier_plateau(char tab[NBLIGNES][NBCOLONNES], int objectifs[5]);
 void gravite(char plateau[NBLIGNES][NBCOLONNES]);
 void traiter_combi(char plateau[NBLIGNES][NBCOLONNES], int objectifs[5]);
 int check_objectif(int niveau, int objectifs[5]);
+int chargerSauvegarde();
+int ecrireSauvegarde(int niveau, char pseudo[20], int nb_vies);
 
 #endif // MANIPULATION_H_INCLUDED

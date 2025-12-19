@@ -7,8 +7,6 @@
 
 int main()
 {
-    srand(time(NULL));
-    char pseudo[20]="Saad";
-    char plateau[NBLIGNES][NBCOLONNES];
-    boucle_jeu(1,plateau,pseudo);
+ srand(time(NULL));
+ menu();
 }
