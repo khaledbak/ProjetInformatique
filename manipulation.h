@@ -21,5 +21,6 @@ int verif_adjacent(int x1, int y1, int x2, int y2);
 void permutation(char tab[NBLIGNES][NBCOLONNES], int x1, int y1, int x2, int y2);
 int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur);
 void supprimer_type(char tab[NBLIGNES][NBCOLONNES], char type);
-
+void verifier_plateau(char tab[NBLIGNES][NBCOLONNES]);
+void gravite(char plateau[NBLIGNES][NBCOLONNES]);
 #endif // MANIPULATION_H_INCLUDED

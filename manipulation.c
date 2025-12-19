@@ -69,6 +69,14 @@ int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur)
 
 
 
+void verifier_plateau(char tab[NBLIGNES][NBCOLONNES])
+{
+    detecter_suite(tab, 6);  // suite de 6 → supprime tout le type
+
+    detecter_suite(tab, 5);  // suite de 4 → supprime seulement la suite
+}
+
+
 int verif_adjacent(int x1, int y1, int x2, int y2)
 {
     return (abs(x1 - x2) == 1 && y1 == y2) || (abs(y1 - y2) == 1 && x1 == x2);
@@ -81,6 +89,42 @@ void permutation(char tab[NBLIGNES][NBCOLONNES], int x1, int y1, int x2, int y2)
     tab[x2][y2] = temp;
 }
 
+void gravite(char plateau[NBLIGNES][NBCOLONNES])
+{
+    char fl_types[5] = {'F','P','O','A','C'};
+    int index;
+
+
+    for (int j = 0; j < NBCOLONNES; j++)
+    {
+        int write_pos = NBLIGNES - 1;
+
+
+        for (int i = NBLIGNES - 1; i >= 0; i--)
+        {
+            if (plateau[i][j] != ' ')
+            {
+                plateau[write_pos][j] = plateau[i][j];
+                if (write_pos != i)
+                    plateau[i][j] = ' ';
+                write_pos--;
+            }
+        }
+
+
+        for (int i = write_pos; i >= 0; i--)
+        {
+            do
+            {
+                index = rand() % 5;
+                plateau[i][j] = fl_types[index];
+            }
+            while (combinaison_interdite(plateau, i, j));
+        }
+    }
+}
+
+
 int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES])
 {
     int x = NBCOLONNES/2;
@@ -92,7 +136,8 @@ int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES])
     while(1)
     {
         system("cls");
-
+        verifier_plateau(plateau);
+        gravite((plateau));
         affichage_plateau(plateau,x,y);
         printf(("\nposition %d %d"),x,y);
         printf(("\nchosen %d %d"), selected_x, selected_y);
@@ -123,7 +168,8 @@ int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES])
                 if(verif_adjacent(selected_x, selected_y, x, y))
                 {
                     permutation(plateau, selected_x, selected_y, x, y);
-                    detecter_suite(plateau, 4);
+                    verifier_plateau(plateau);
+                    gravite((plateau));
 
                 }
                 selected = 0;

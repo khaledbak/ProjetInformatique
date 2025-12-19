@@ -11,11 +11,15 @@
 	<stdlib.h>
 	<stdio.h>
 
-1766160552 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.h
+1766163978 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.h
 	<stdlib.h>
 	<stdio.h>
 	<conio.h>
 
 1766155647 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\affichage.c
 	"affichage.h"
+
+1766164735 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.c
+	"affichage.h"
+	"manipulation.h"
 
