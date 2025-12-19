@@ -3,6 +3,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <windows.h>
+
 
 #define NBLIGNES 25
 #define NBCOLONNES 45
@@ -20,7 +22,7 @@
 #define BG_BLANC    "\033[47m"
 
 int combinaison_interdite(char tab[NBLIGNES][NBCOLONNES], int i, int j);
-void initialisation_plateau(char tab[NBLIGNES][NBCOLONNES]);
+void initialisation_plateau(char tab[NBLIGNES][NBCOLONNES], int niveau);
 const char* couleur_item(char c);
 void affichage_plateau(char tab[NBLIGNES][NBCOLONNES], int x, int y);
 

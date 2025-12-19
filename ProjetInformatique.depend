@@ -1,25 +1,28 @@
 # depslib dependency file v1.0
-1766155934 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\main.c
+1766181142 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	"manipulation.h"
 	"affichage.h"
 
-1766155985 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\affichage.h
+1766178775 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\affichage.h
 	<time.h>
 	<stdlib.h>
 	<stdio.h>
+	<windows.h>
 
-1766170324 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.h
+1766179730 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.h
 	<stdlib.h>
 	<stdio.h>
 	<conio.h>
+	<time.h>
+	<windows.h>
 
-1766155647 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\affichage.c
+1766180204 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\affichage.c
 	"affichage.h"
 
-1766164735 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.c
+1766181482 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.c
 	"affichage.h"
 	"manipulation.h"
 

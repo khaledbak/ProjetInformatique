@@ -8,7 +8,7 @@
 int main()
 {
     srand(time(NULL));
+    char pseudo[20]="Saad";
     char plateau[NBLIGNES][NBCOLONNES];
-    initialisation_plateau(plateau);
-    boucle_jeu(plateau);
+    boucle_jeu(1,plateau,pseudo);
 }

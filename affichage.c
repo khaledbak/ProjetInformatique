@@ -15,10 +15,11 @@ int combinaison_interdite(char tab[NBLIGNES][NBCOLONNES], int i, int j)
 }
 
 
-void initialisation_plateau(char tab[NBLIGNES][NBCOLONNES])
+void initialisation_plateau(char tab[NBLIGNES][NBCOLONNES], int niveau)
 {
     char fl_types[5]= {'F','P','O','A','C'};
     int index = 0;
+    int taille_bloc = 3;
     for(int i = 0; i < NBLIGNES; i ++)
     {
         for(int j = 0; j< NBCOLONNES; j++)
@@ -29,8 +30,96 @@ void initialisation_plateau(char tab[NBLIGNES][NBCOLONNES])
                 tab[i][j]= fl_types[index];
             }
             while(combinaison_interdite(tab, i,j));
-
         }
+    }
+switch (niveau)
+{
+case 1:
+
+    break;
+case 2:
+    for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[10 + dy][10 + dx] = '#';
+            }
+        }
+    for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[15 + dy][15 + dx] = '#';
+            }
+        }
+    for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[20 + dy][20 + dx] = '#';
+            }
+        }
+        for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[10 + dy][30 + dx] = '#';
+            }
+        }
+    for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[15 + dy][25 + dx] = '#';
+            }
+        }
+
+        break;
+    case 3:
+            for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[10 + dy][10 + dx] = '#';
+            }
+        }
+    for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[15 + dy][15 + dx] = '#';
+            }
+        }
+    for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[20 + dy][20 + dx] = '#';
+            }
+        }
+        for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[10 + dy][30 + dx] = '#';
+            }
+        }
+    for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[15 + dy][25 + dx] = '#';
+            }
+        }
+        for (int dy = 0; dy < taille_bloc; dy++)  // parcours les lignes du bloc
+        {
+            for (int dx = 0; dx < taille_bloc; dx++)  // parcours les colonnes du bloc
+            {
+                tab[10 + dy][20 + dx] = '#';
+            }
+        }
+
+        break;
     }
 }
 
@@ -61,6 +150,7 @@ void affichage_plateau(char tab[NBLIGNES][NBCOLONNES], int x, int y)
 
     for(int i = 0; i< NBLIGNES; i++)
     {
+        printf("\033[%d;%dH",i, 0);
         for(int j = 0; j<NBCOLONNES; j++)
         {
             if(i == x && j == y)
