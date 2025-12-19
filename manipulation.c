@@ -1,6 +1,73 @@
 #include "affichage.h"
 #include "manipulation.h"
 
+void supprimer_type(char tab[NBLIGNES][NBCOLONNES], char type)
+{
+    for(int i = 0; i < NBLIGNES; i++)
+    {
+        for(int j = 0; j < NBCOLONNES; j++)
+        {
+            if(tab[i][j] == type)
+                tab[i][j] = ' ';
+        }
+    }
+}
+
+int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur)
+{
+    int i, j, k;
+
+
+    for(i = 0; i < NBLIGNES; i++)
+    {
+        for(j = 0; j <= NBCOLONNES - min_longueur; j++)
+        {
+            char x = tab[i][j];
+            if(x == ' ')
+                continue;
+
+            int compteur = 1;
+            for(k = 1; k < min_longueur; k++)
+                if(tab[i][j+k] == x) compteur++;
+            if(compteur == min_longueur)
+            {
+                if(min_longueur == 6) supprimer_type(tab, x);
+                else
+                {
+                    for(k = 0; k < min_longueur; k++)
+                        tab[i][j+k] = ' ';
+                }
+            }
+        }
+    }
+
+
+    for(j = 0; j < NBCOLONNES; j++)
+    {
+        for(i = 0; i <= NBLIGNES - min_longueur; i++)
+        {
+            char x = tab[i][j];
+            if(x == ' ')
+                continue;
+
+            int compteur = 1;
+            for(k = 1; k < min_longueur; k++)
+                if(tab[i+k][j] == x) compteur++;
+            if(compteur == min_longueur)
+            {
+                if(min_longueur == 6) supprimer_type(tab, x);
+                else
+                {
+                    for(k = 0; k < min_longueur; k++)
+                        tab[i+k][j] = ' ';
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+
 
 int verif_adjacent(int x1, int y1, int x2, int y2)
 {
@@ -56,6 +123,7 @@ int boucle_jeu(char plateau[NBLIGNES][NBCOLONNES])
                 if(verif_adjacent(selected_x, selected_y, x, y))
                 {
                     permutation(plateau, selected_x, selected_y, x, y);
+                    detecter_suite(plateau, 4);
 
                 }
                 selected = 0;
