@@ -53,7 +53,7 @@ int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur, int objecti
                     break;
                 }
                 nb_sup++;
-                if(compteur >= 6) supprimer_type(tab, x);  // Si 6 ou plus
+                if(compteur >= 7) supprimer_type(tab, x);  // Si 6 ou plus
                 else
                 {
                     for(k = 0; k < compteur; k++)  // Supprimer seulement la suite trouvée
@@ -98,7 +98,7 @@ int detecter_suite(char tab[NBLIGNES][NBCOLONNES], int min_longueur, int objecti
                     break;
                 }
                 nb_sup++;
-                if(compteur >= 6) supprimer_type(tab, x);
+                if(compteur >= 7) supprimer_type(tab, x);
                 else
                 {
                     for(k = 0; k < compteur; k++)
@@ -132,8 +132,8 @@ int verifier_plateau(char tab[NBLIGNES][NBCOLONNES], int objectifs[5])
     int trouve = 0;
     trouve += detecter_croix(tab,objectifs);
     trouve += detecter_carre(tab,objectifs);
-    trouve +=detecter_suite(tab, 6, objectifs);  // suite de 6 → supprime tout le type
-    //trouve +=detecter_suite(tab, 5, objectifs);  // suite de 4 → supprime seulement la suite
+    trouve +=detecter_suite(tab, 7, objectifs);  // suite de 6 → supprime tout le type
+    trouve +=detecter_suite(tab, 6, objectifs);  // suite de 4 → supprime seulement la suite
     return trouve;
 }
 
@@ -401,15 +401,15 @@ void gravite(char plateau[NBLIGNES][NBCOLONNES])
 
 int check_objectif(int niveau, int objectifs[5])
 {
-    if(niveau==1 && objectifs[0]>=10 && objectifs[1] >=10 && objectifs[2] >= 10 && objectifs[3]>=10 && objectifs[4] >=10)
+    if(niveau==1 && objectifs[0]>=10 && objectifs[1] >=10 && objectifs[2] >= 10 )
     {
         return 1;
     }
-    else if(niveau==2 && objectifs[0]>=25 && objectifs[1] >=25 && objectifs[2] >= 25 && objectifs[3]>=25 && objectifs[4] >=25)
+    else if(niveau==2 && objectifs[0]>=10 && objectifs[1] >=10 && objectifs[2] >= 10 && objectifs[3]>=10)
     {
         return 2;
     }
-    else if(niveau==3 && objectifs[0]>=25 && objectifs[1] >=25 && objectifs[2] >= 25 && objectifs[3]>=25 && objectifs[4] >=25)
+    else if(niveau==3 && objectifs[0]>=15 && objectifs[1] >=15 && objectifs[2] >= 15 && objectifs[3]>=15 && objectifs[4] >=15)
     {
         return 3;
     }
@@ -440,11 +440,11 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20], 
     {
     case 1:
         nb_coups = 40;
-        temps_max = 200;
+        temps_max = 120;
         break;
     case 2:
         nb_coups = 30;
-        temps_max = 120;
+        temps_max = 90;
         break;
     case 3:
         nb_coups = 25;
@@ -459,13 +459,13 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20], 
     switch(niveau)
     {
     case 1:
-        printf("\033[16;60HNiveau 1\033[17;60HF:%d/10 P:%d/10 O:%d/10 A:%d/10 C:%d/10", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+        printf("\033[16;60HNiveau 1\033[17;60HF:%d/10 P:%d/10 O:%d/10", objectifs[0],objectifs[1],objectifs[2]);
         break;
     case 2:
-        printf("\033[16;60HNiveau 2\033[17;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+        printf("\033[16;60HNiveau 2\033[17;60HF:%d/10 P:%d/10 O:%d/10 A:%d/10", objectifs[0],objectifs[1],objectifs[2],objectifs[3] );
         break;
     case 3:
-        printf("\033[16;60HNiveau 3\033[17;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+        printf("\033[16;60HNiveau 3\033[17;60HF:%d/15 P:%d/15 O:%d/15 A:%d/15 C:%d/15", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
         break;
     }
     printf("\033[20;60HCoups restants:%2d",nb_coups);
@@ -548,13 +548,13 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20], 
             switch(niveau)
             {
             case 1:
-                printf("\033[16;60HNiveau 1\033[17;60HF:%d/10 P:%d/10 O:%d/10 A:%d/10 C:%d/10", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+                printf("\033[16;60HNiveau 1\033[17;60HF:%d/10 P:%d/10 O:%d/10", objectifs[0],objectifs[1],objectifs[2]);
                 break;
             case 2:
-                printf("\033[16;60HNiveau 2\033[17;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+                printf("\033[16;60HNiveau 2\033[17;60HF:%d/10 P:%d/10 O:%d/10 A:%d/10", objectifs[0],objectifs[1],objectifs[2],objectifs[3] );
                 break;
             case 3:
-                printf("\033[16;60HNiveau 3\033[17;60HF:%d/25 P:%d/25 O:%d/25 A:%d/25 C:%d/25", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
+                printf("\033[16;60HNiveau 3\033[17;60HF:%d/15 P:%d/15 O:%d/15 A:%d/15 C:%d/15", objectifs[0],objectifs[1],objectifs[2],objectifs[3],objectifs[4] );
                 break;
             }
             printf("\033[14;60HJoueur: %s", pseudo);
