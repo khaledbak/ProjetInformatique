@@ -130,10 +130,114 @@ void traiter_combi(char plateau[NBLIGNES][NBCOLONNES], int objectifs[5])
 int verifier_plateau(char tab[NBLIGNES][NBCOLONNES], int objectifs[5])
 {
     int trouve = 0;
+    trouve += detecter_croix(tab,objectifs);
+    trouve += detecter_carre(tab,objectifs);
     trouve +=detecter_suite(tab, 6, objectifs);  // suite de 6 → supprime tout le type
-    trouve +=detecter_suite(tab, 5, objectifs);  // suite de 4 → supprime seulement la suite
+    //trouve +=detecter_suite(tab, 5, objectifs);  // suite de 4 → supprime seulement la suite
     return trouve;
 }
+
+int detecter_carre(char tab[NBLIGNES][NBCOLONNES], int objectifs[5])
+{
+    int nb_sup=0;
+
+    for(int i = 0; i<=NBLIGNES-4; i++)
+    {
+        for(int j=0; j<=NBCOLONNES-4; j++)
+        {
+            char x = tab[i][j];
+            if(x==' '|| x=='#')
+                continue;
+            int contour = 1;
+
+            for(int k =0; k<4; k++)
+            {
+                if(tab[i][j+k]!=x)
+                {
+                    contour = 0;
+                    break;
+                }
+            }
+
+            if(contour)
+            {
+                for(int k = 0; k<4; k++)
+                {
+                    if(tab[i+3][j+k]!=x)
+                    {
+                        contour = 0;
+                        break;
+                    }
+                }
+            }
+            if(contour)
+            {
+                for(int k =1; k<3; k++)
+                {
+                    if(tab[i+k][j]!=x)
+                    {
+                        contour =0;
+                        break;
+                    }
+                }
+            }
+            if(contour)
+            {
+                for(int k=1; k<3; k++)
+                {
+                    if(tab[i+k][j+3]!=x)
+                    {
+                        contour = 0;
+                        break;
+                    }
+                }
+            }
+
+            if(contour)
+            {
+
+                int compteur = 0;
+
+                for(int di = 0; di < 4; di++)
+                {
+                    for(int dj = 0; dj < 4; dj++)
+                    {
+                        if(tab[i+di][j+dj] == x)
+                        {
+                            tab[i+di][j+dj] = ' ';
+                            compteur++;
+                        }
+                    }
+                }
+
+                switch(x)
+                {
+                case 'F':
+                    objectifs[0] += compteur;
+                    break;
+                case 'P':
+                    objectifs[1] += compteur;
+                    break;
+                case 'O':
+                    objectifs[2] += compteur;
+                    break;
+                case 'A':
+                    objectifs[3] += compteur;
+                    break;
+                case 'C':
+                    objectifs[4] += compteur;
+                    break;
+                }
+
+                nb_sup++;
+                j += 3;
+            }
+
+        }
+    }
+    return nb_sup;
+}
+
 
 
 int verif_adjacent(int x1, int y1, int x2, int y2)
@@ -153,6 +257,95 @@ int permutation(char tab[NBLIGNES][NBCOLONNES], int x1, int y1, int x2, int y2)
     else
         return 0;
 }
+
+int detecter_croix(char tab[NBLIGNES][NBCOLONNES], int objectifs[5])
+{
+    int nb_sup=0;
+
+    for(int i = 2; i<NBLIGNES-2; i++)
+    {
+        for(int j = 2; j< NBCOLONNES-2; j++)
+        {
+            char x = tab[i][j];
+            if(x == ' '||x=='#')
+                continue;
+
+            int croix_valide =1;
+
+            for(int k =-2; k<=2; k++)
+            {
+                if(tab[i][j+k]!=x)
+                {
+                    croix_valide =0;
+                    break;
+                }
+            }
+
+            if(croix_valide)
+            {
+                for(int k =-2; k<=2; k++)
+                {
+                    if(tab[i+k][j]!=x)
+                    {
+                        croix_valide = 0;
+                        break;
+                    }
+                }
+            }
+
+            if(croix_valide)
+            {
+                int compteur = 0;
+
+                for(int l = 0; l<NBCOLONNES; l++)
+                {
+                    if(tab[i][l]== x)
+                    {
+                        tab[i][l]= ' ';
+                        compteur++;
+                    }
+                }
+
+                for(int m = 0; m <NBLIGNES; m++)
+                {
+                    if(tab[m][j]== x)
+                    {
+                        tab[m][j]= ' ';
+                        compteur++;
+                    }
+                }
+
+                switch(x)
+                {
+                case 'F':
+                    objectifs[0] += compteur;
+                    break;
+                case 'P':
+                    objectifs[1] += compteur;
+                    break;
+                case 'O':
+                    objectifs[2] += compteur;
+                    break;
+                case 'A':
+                    objectifs[3] += compteur;
+                    break;
+                case 'C':
+                    objectifs[4] += compteur;
+                    break;
+                }
+
+                nb_sup++;
+
+            }
+
+
+        }
+    }
+
+    return nb_sup;
+}
+
+
 
 void gravite(char plateau[NBLIGNES][NBCOLONNES])
 {
@@ -341,7 +534,8 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20], 
                 }
                 while(choix>2 || choix <1);
                 if(choix == 1)
-                {   printf("Sauvegarde\n");
+                {
+                    printf("Sauvegarde\n");
                     ecrireSauvegarde(niveau, pseudo, nb_vies);
                     return 0;
                 }
@@ -428,24 +622,24 @@ int boucle_jeu(int niveau, char plateau[NBLIGNES][NBCOLONNES], char pseudo[20], 
 
 int chargerSauvegarde()
 {
-  FILE* fichier;
-  char plateau[NBLIGNES][NBCOLONNES];
-  int niveau;
-  char pseudo[20];
-  int nb_vies;
+    FILE* fichier;
+    char plateau[NBLIGNES][NBCOLONNES];
+    int niveau;
+    char pseudo[20];
+    int nb_vies;
 
-  fichier = fopen("sauvegarde.txt","r");
+    fichier = fopen("sauvegarde.txt","r");
 
-  if(fichier == NULL)
-  {
-      printf("Fichier introuvable\n");
-      return 1;
-  }
-  fscanf(fichier,"%d %s %d\n",&niveau, pseudo,&nb_vies);
-  fclose(fichier);
+    if(fichier == NULL)
+    {
+        printf("Fichier introuvable\n");
+        return 1;
+    }
+    fscanf(fichier,"%d %s %d\n",&niveau, pseudo,&nb_vies);
+    fclose(fichier);
 
-  boucle_jeu(niveau,plateau,pseudo,nb_vies);
-  return 0;
+    boucle_jeu(niveau,plateau,pseudo,nb_vies);
+    return 0;
 
 }
 

@@ -30,5 +30,6 @@ void traiter_combi(char plateau[NBLIGNES][NBCOLONNES], int objectifs[5]);
 int check_objectif(int niveau, int objectifs[5]);
 int chargerSauvegarde();
 int ecrireSauvegarde(int niveau, char pseudo[20], int nb_vies);
-
+int detecter_carre(char tab[NBLIGNES][NBCOLONNES], int objectifs[5]);
+int detecter_croix(char tab[NBLIGNES][NBCOLONNES], int objectifs[5]);
 #endif // MANIPULATION_H_INCLUDED

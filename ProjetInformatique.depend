@@ -13,7 +13,7 @@
 	<windows.h>
 	<string.h>
 
-1766186304 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.h
+1766227628 c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.h
 	<stdlib.h>
 	<stdio.h>
 	<conio.h>
@@ -24,7 +24,7 @@
 	"affichage.h"
 	"manipulation.h"
 
-1766186413 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.c
+1766226211 source:c:\users\bakkh\desktop\informatique\projet_code\projetinformatique\manipulation.c
 	"affichage.h"
 	"manipulation.h"
 
